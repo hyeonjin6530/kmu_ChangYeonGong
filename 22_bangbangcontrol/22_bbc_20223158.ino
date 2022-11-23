@@ -12,7 +12,7 @@
 #define _INTERVAL_SERIAL  20 // serial interval (unit: ms)
 
 // EMA filter configuration for the IR distance sensor
-#define _EMA_ALPHA 0      // EMA weight (range: 0 to 1)
+#define _EMA_ALPHA 0.2      // EMA weight (range: 0 to 1)
                           // Setting _EMA_ALPHA to 0 effectively disables EMA filter.
 
 // Servo adjustment
@@ -22,7 +22,7 @@
 #define _SERVO_ANGLE_DIFF 240 // Replace with |D - E| degree
 #define _SERVO_SPEED 1000 // servo speed limit (unit: degree/second)
 
-#define _BANGBANG_RANGE 950
+#define _BANGBANG_RANGE 400
 
 // global variables
 float dist_filtered, dist_ema, dist_target; // unit: mm
@@ -77,7 +77,7 @@ void loop() {
     event_dist = false;
 
     // get a distance reading from the distance sensor
-    dist_filtered = volt_to_distance(ir_sensor_filtered(50, 0.5)); // Replace n with your desired value
+    dist_filtered = volt_to_distance(ir_sensor_filtered(100, 0.5)); // Replace n with your desired value
     dist_ema = _EMA_ALPHA * dist_ema + (1.0 - _EMA_ALPHA) * dist_filtered;
 
     // bang bang control
